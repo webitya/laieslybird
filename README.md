@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# laieslybird
 
-## Getting Started
+A professional full-stack international news website built with Next.js 14, MongoDB, and Tailwind CSS.
 
-First, run the development server:
+## Features
+
+- **Public News Website**: Beautifully designed homepage, category-specific feeds, and dynamic article pages.
+- **Admin Dashboard**: Secure management of articles, authors, and categories.
+- **Authentication**: Role-based access control (Admin/Editor) via NextAuth.
+- **Cloudinary Integration**: Fast image uploads and optimization.
+- **SEO Optimized**: Dynamic metadata, Open Graph support, sitemaps, and robots.txt.
+- **Responsive Design**: Works perfectly on mobile, tablet, and desktop.
+- **Dark/Light Mode**: User-controlled theme preferences.
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Database**: MongoDB Atlas
+- **ORM**: Mongoose
+- **Auth**: NextAuth.js
+- **Styling**: Tailwind CSS + lucide-react
+- **Image Storage**: Cloudinary
+
+## Setup Instructions
+
+### 1. Prerequisites
+- Node.js 18+
+- MongoDB Atlas Account
+- Cloudinary Account
+
+### 2. Environment Variables
+Create a `.env` file in the root directory based on `.env.example`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+MONGODB_URI=your_mongodb_atlas_uri
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+ADMIN_EMAIL=admin@laieslybird.com
+ADMIN_PASSWORD=admin123
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 4. Seed Admin User
+Run the seeding script to create your first admin account:
+```bash
+node scripts/seed-admin.js
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Run Development Server
+```bash
+npm run dev
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This project is optimized for deployment on **Vercel**.
+1. Push your code to a GitHub repository.
+2. Connect the repository to Vercel.
+3. Add the environment variables in the Vercel dashboard.
+4. Deploy!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+MIT
+"# laieslybird" 
