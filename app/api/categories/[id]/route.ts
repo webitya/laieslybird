@@ -3,6 +3,7 @@ import dbConnect from '@/lib/db';
 import Category from '@/models/Category';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/route';
+import { generateSlug } from '@/utils/slugify';
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
