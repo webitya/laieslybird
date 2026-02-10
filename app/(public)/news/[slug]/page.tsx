@@ -1,5 +1,7 @@
 import dbConnect from '@/lib/db';
 import Article from '@/models/Article';
+import Category from '@/models/Category';
+import Author from '@/models/Author';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
