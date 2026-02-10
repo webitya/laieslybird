@@ -7,7 +7,7 @@ export default function ContactPage() {
             <section className="pt-24 pb-12">
                 <div className="container px-4 md:px-8">
                     <div className="max-w-4xl space-y-4">
-                        <div className="inline-flex px-3 py-1 rounded-md bg-blue-600/10 text-blue-600 dark:text-sky-400 text-[10px] font-black uppercase tracking-widest\">
+                        <div className="inline-flex px-3 py-1 rounded-md bg-blue-600/10 text-blue-600 dark:text-sky-400 text-[10px] font-black uppercase tracking-widest">
                             Connect
                         </div>
                         <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white uppercase italic leading-[0.85]">

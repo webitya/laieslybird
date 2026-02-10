@@ -56,11 +56,8 @@ const Header = () => {
             <div className="px-4 md:px-8 h-14 flex items-center justify-between">
                 {/* Logo & Desktop Nav */}
                 <div className="flex items-center gap-8">
-                    <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-all duration-300">
-                            L
-                        </div>
-                        <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
+                    <Link href="/" className="group">
+                        <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors uppercase">
                             LAIESLYBIRD
                         </span>
                     </Link>

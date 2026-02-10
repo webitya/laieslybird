@@ -41,7 +41,7 @@ export default function PrivacyPage() {
                             </p>
                             <p>
                                 By accessing our platform, you acknowledge the collection and use of information in accordance with this protocol.
-                            </p> section.
+                            </p>
                         </Section>
 
                         <Section id="data-collection" title="02. Data Acquisition">
@@ -99,7 +99,8 @@ function Section({ id, title, children }: { id: string, title: string, children:
             <div className="text-base text-slate-600 dark:text-slate-400 leading-relaxed space-y-4 font-medium">
                 {children}
             </div>
-        </section> section;
+        </section>
+    );
 }
 
 function TOCLink({ href, children }: { href: string, children: React.ReactNode }) {

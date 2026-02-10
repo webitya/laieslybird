@@ -19,11 +19,10 @@ const Footer = () => {
             <div className="px-4 md:px-8 py-12">
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-8">
                     <div className="col-span-2 lg:col-span-2 space-y-4">
-                        <Link href="/" className="flex items-center gap-2">
-                            <div className="bg-blue-600 w-6 h-6 rounded-md flex items-center justify-center text-white font-bold text-xs">
-                                L
-                            </div>
-                            <span className="text-lg font-bold text-gray-900 dark:text-white">LAIESLYBIRD</span>
+                        <Link href="/" className="group">
+                            <span className="text-lg font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors uppercase">
+                                LAIESLYBIRD
+                            </span>
                         </Link>
                         <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs leading-relaxed">
                             Delivering swift, accurate, and unbiased international news coverage. Your trusted source for global events and analysis.
