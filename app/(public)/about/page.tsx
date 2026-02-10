@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, Globe, Shield, Target, Users } from 'lucide-react';
 
 export default function AboutPage() {
