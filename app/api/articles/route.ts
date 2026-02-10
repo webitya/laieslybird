@@ -35,6 +35,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
+        const data = await req.json();
         const { title, content, category, author, tags, images, featuredImage, status } = data;
 
         if (!title || !content || !category || !author) {
