@@ -5,7 +5,7 @@ import { Plus, Trash2, Search, Edit2, X, Check } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export default function CategoriesPage() {
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<any[]>([]);
     const [newName, setNewName] = useState('');
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);

@@ -1,5 +1,6 @@
 import AdminSidebar from '@/components/admin/Sidebar';
 import MobileNav from '@/components/admin/MobileNav';
+import { Toaster } from 'react-hot-toast';
 
 export default function AdminLayout({
     children,
@@ -19,6 +20,7 @@ export default function AdminLayout({
                 <main className="flex-1 p-[10px] overflow-y-auto">
                     {children}
                 </main>
+                <Toaster position="top-right" />
             </div>
         </div>
     );
