@@ -37,7 +37,7 @@ export default function ArticlesPage() {
     };
 
     const filteredArticles = articles.filter((article: any) =>
-        article.title.toLowerCase().includes(searchTerm.toLowerCase())
+        article?.title?.toLowerCase().includes(searchTerm.toLowerCase()) || false
     );
 
     if (loading) return <div className="p-8 text-center text-slate-500">Loading articles...</div>;
@@ -87,15 +87,15 @@ export default function ArticlesPage() {
                             {filteredArticles.map((article: any) => (
                                 <tr key={article._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                                     <td className="px-4 py-2.5 font-medium text-slate-900 dark:text-white max-w-md truncate">
-                                        {article.title}
+                                        {article.title || 'Untitled'}
                                     </td>
                                     <td className="px-4 py-2.5">
                                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${article.status === 'published'
-                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30'
-                                                : 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-900/30'
+                                            ? 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30'
+                                            : 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-900/30'
                                             }`}>
                                             <span className={`w-1 h-1 rounded-full mr-1.5 ${article.status === 'published' ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-                                            {article.status.charAt(0).toUpperCase() + article.status.slice(1)}
+                                            {(article.status || 'draft').charAt(0).toUpperCase() + (article.status || 'draft').slice(1)}
                                         </span>
                                     </td>
                                     <td className="px-4 py-2.5 text-slate-600 dark:text-slate-400">
@@ -110,7 +110,7 @@ export default function ArticlesPage() {
                                         </div>
                                     </td>
                                     <td className="px-4 py-2.5 text-xs text-slate-500 dark:text-slate-500 whitespace-nowrap">
-                                        {format(new Date(article.createdAt), 'MMM d, yyyy')}
+                                        {article.createdAt ? format(new Date(article.createdAt), 'MMM d, yyyy') : '-'}
                                     </td>
                                     <td className="px-4 py-2.5 text-right">
                                         <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
