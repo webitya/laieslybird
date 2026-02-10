@@ -1,7 +1,19 @@
+'use client';
+
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, ArrowRight } from 'lucide-react';
 
 const Footer = () => {
+    const [categories, setCategories] = useState<{ _id: string, name: string, slug: string }[]>([]);
+
+    useEffect(() => {
+        fetch('/api/categories')
+            .then(res => res.json())
+            .then(data => setCategories(data))
+            .catch(() => { });
+    }, []);
+
     return (
         <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 backdrop-blur-sm mt-auto">
             <div className="px-4 md:px-8 py-12">
@@ -25,40 +37,25 @@ const Footer = () => {
                     </div>
 
                     <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wider">Categories</h4>
-                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                            <FooterLink href="/category/world">World</FooterLink>
-                            <FooterLink href="/category/politics">Politics</FooterLink>
-                            <FooterLink href="/category/business">Business</FooterLink>
-                            <FooterLink href="/category/tech">Technology</FooterLink>
-                            <FooterLink href="/category/sports">Sports</FooterLink>
+                        <h4 className="font-black text-slate-900 dark:text-white mb-5 text-[10px] uppercase tracking-[0.2em]">Explore</h4>
+                        <ul className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
+                            {categories.slice(0, 5).map(c => (
+                                <FooterLink key={c._id} href={`/category/${c.slug}`}>{c.name}</FooterLink>
+                            ))}
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wider">Company</h4>
-                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <h4 className="font-black text-slate-900 dark:text-white mb-5 text-[10px] uppercase tracking-[0.2em]">Company</h4>
+                        <ul className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
                             <FooterLink href="/about">About Us</FooterLink>
                             <FooterLink href="/contact">Contact</FooterLink>
-                            <FooterLink href="/careers">Careers</FooterLink>
                             <FooterLink href="/privacy">Privacy Policy</FooterLink>
                             <FooterLink href="/terms">Terms of Service</FooterLink>
                         </ul>
                     </div>
 
-                    <div className="col-span-2 md:col-span-4 lg:col-span-1">
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wider">Stay Updated</h4>
-                        <div className="flex flex-col gap-2">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-black focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-                            />
-                            <button className="w-full px-3 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
-                                Subscribe
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-gray-400">

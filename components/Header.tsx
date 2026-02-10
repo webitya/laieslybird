@@ -10,6 +10,7 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [scrolled, setScrolled] = useState(false);
+    const [categories, setCategories] = useState<{ _id: string, name: string, slug: string }[]>([]);
     const { theme, setTheme } = useTheme();
     const router = useRouter();
 
@@ -18,8 +19,21 @@ const Header = () => {
             setScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
+        fetchCategories();
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch('/api/categories');
+            if (res.ok) {
+                const data = await res.json();
+                setCategories(data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch categories');
+        }
+    };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,29 +44,23 @@ const Header = () => {
         }
     };
 
-    const navLinks = [
-        { href: '/category/world', label: 'World' },
-        { href: '/category/politics', label: 'Politics' },
-        { href: '/category/business', label: 'Business' },
-        { href: '/category/tech', label: 'Tech' },
-        { href: '/category/sports', label: 'Sports' },
-    ];
+    const navLinks = categories.slice(0, 6).map(c => ({ href: `/category/${c.slug}`, label: c.name }));
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full transition-all duration-300 border-b ${scrolled
-                ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-gray-200 dark:border-gray-800 shadow-sm'
+            className={`sticky top-0 z-50 w-full transition-all duration-500 border-b ${scrolled
+                ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl border-gray-200/50 dark:border-gray-800/50 shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_20px_-5px_rgba(0,0,0,0.3)]'
                 : 'bg-white dark:bg-black border-transparent'
                 }`}
         >
             <div className="px-4 md:px-8 h-14 flex items-center justify-between">
                 {/* Logo & Desktop Nav */}
                 <div className="flex items-center gap-8">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="bg-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-blue-700 transition-colors">
+                    <Link href="/" className="flex items-center gap-2.5 group">
+                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-all duration-300">
                             L
                         </div>
-                        <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
                             LAIESLYBIRD
                         </span>
                     </Link>
