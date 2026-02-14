@@ -11,7 +11,7 @@ const Header = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [scrolled, setScrolled] = useState(false);
     const [categories, setCategories] = useState<{ _id: string, name: string, slug: string }[]>([]);
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme, resolvedTheme } = useTheme();
     const router = useRouter();
 
     useEffect(() => {
@@ -103,7 +103,7 @@ const Header = () => {
                     </form>
 
                     <button
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                         className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 flex items-center justify-center"
                         aria-label="Toggle theme"
                     >
