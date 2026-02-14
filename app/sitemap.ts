@@ -5,28 +5,68 @@ import Category from '@/models/Category';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     await dbConnect();
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://laieslybird.com';
 
     const [articles, categories] = await Promise.all([
         Article.find({ status: 'published' }),
         Category.find({}),
     ]);
 
-    const articleEntries: MetadataRoute.Sitemap = articles.map((article) => ({
-        url: `${process.env.NEXTAUTH_URL}/news/${article.slug}`,
-        lastModified: article.updatedAt,
+    const articleUrls = articles.map((article: any) => ({
+        url: `${baseUrl}/news/${article.slug}`,
+        lastModified: article.updatedAt || article.createdAt,
+        changeFrequency: 'daily' as const,
+        priority: 0.8,
+        images: article.featuredImage || article.images?.[0]
+            ? [article.featuredImage || article.images[0]]
+            : undefined,
     }));
 
-    const categoryEntries: MetadataRoute.Sitemap = categories.map((cat) => ({
-        url: `${process.env.NEXTAUTH_URL}/category/${cat.slug}`,
+    const categoryUrls = categories.map((category: any) => ({
+        url: `${baseUrl}/category/${category.slug}`,
         lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: 0.7,
     }));
 
     return [
         {
-            url: process.env.NEXTAUTH_URL!,
+            url: baseUrl,
             lastModified: new Date(),
+            changeFrequency: 'hourly',
+            priority: 1,
         },
-        ...articleEntries,
-        ...categoryEntries,
+        {
+            url: `${baseUrl}/about`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+        {
+            url: `${baseUrl}/e-paper`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.6,
+        },
+        {
+            url: `${baseUrl}/privacy`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.3,
+        },
+        {
+            url: `${baseUrl}/terms`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.3,
+        },
+        ...articleUrls,
+        ...categoryUrls,
     ];
 }

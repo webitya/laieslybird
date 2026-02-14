@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, ArrowRight } from 'lucide-react';
+import VisitorCounter from './VisitorCounter';
 
 const Footer = () => {
     const [categories, setCategories] = useState<{ _id: string, name: string, slug: string }[]>([]);
@@ -49,12 +50,36 @@ const Footer = () => {
                         <ul className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
                             <FooterLink href="/about">About Us</FooterLink>
                             <FooterLink href="/contact">Contact</FooterLink>
+                            <FooterLink href="/e-paper">E-Paper</FooterLink>
                             <FooterLink href="/privacy">Privacy Policy</FooterLink>
                             <FooterLink href="/terms">Terms of Service</FooterLink>
                         </ul>
                     </div>
 
+                    <div className="col-span-2 md:col-span-1">
+                        <h4 className="font-black text-slate-900 dark:text-white mb-5 text-[10px] uppercase tracking-[0.2em]">Newsletter</h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                            Get the latest news delivered to your inbox
+                        </p>
+                        <form className="flex gap-2">
+                            <input
+                                type="email"
+                                placeholder="Your email"
+                                className="flex-1 px-3 py-2 text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-colors"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
 
+                </div>
+
+                <div className="mb-8">
+                    <VisitorCounter />
                 </div>
 
                 <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-gray-400">

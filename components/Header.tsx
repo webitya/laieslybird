@@ -23,6 +23,18 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Lock body scroll when menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMenuOpen]);
+
     const fetchCategories = async () => {
         try {
             const res = await fetch('/api/categories');
@@ -56,8 +68,8 @@ const Header = () => {
             <div className="px-4 md:px-8 h-14 flex items-center justify-between">
                 {/* Logo & Desktop Nav */}
                 <div className="flex items-center gap-8">
-                    <Link href="/" className="group">
-                        <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors uppercase">
+                    <Link href="/" className="group flex items-center">
+                        <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors uppercase leading-none pb-0.5">
                             LAIESLYBIRD
                         </span>
                     </Link>
@@ -76,7 +88,7 @@ const Header = () => {
                 </div>
 
                 {/* Right Side Actions */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 md:gap-3 h-full">
                     <form onSubmit={handleSearch} className="relative hidden md:block">
                         <div className="relative group">
                             <input
@@ -92,29 +104,50 @@ const Header = () => {
 
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300"
+                        className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 flex items-center justify-center"
                         aria-label="Toggle theme"
                     >
-                        <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                        <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                        <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                        <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     </button>
 
                     <button
-                        className="md:hidden p-2 text-gray-600 dark:text-gray-300"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors flex items-center justify-center"
+                        onClick={() => setIsMenuOpen(true)}
                         aria-label="Menu"
                     >
-                        {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                        <Menu className="h-6 w-6" />
                     </button>
                 </div>
             </div>
 
             {/* Mobile Menu Overlay */}
+            {isMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[90] md:hidden"
+                    onClick={() => setIsMenuOpen(false)}
+                />
+            )}
+
+            {/* Mobile Menu Drawer */}
             <div
-                className={`fixed inset-x-0 top-14 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out md:hidden overflow-hidden ${isMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+                className={`fixed top-0 right-0 h-[100dvh] w-full max-w-sm !bg-white dark:!bg-black border-l border-gray-200 dark:border-gray-800 z-[100] transform transition-transform duration-300 ease-in-out md:hidden flex flex-col overflow-x-hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}
+                style={{ backgroundColor: theme === 'dark' ? '#000000' : undefined }}
             >
-                <div className="p-4 space-y-4">
+                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+                    <span className="text-lg font-black tracking-tighter text-slate-900 dark:text-white uppercase">
+                        MENU
+                    </span>
+                    <button
+                        onClick={() => setIsMenuOpen(false)}
+                        className="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-4 space-y-6">
                     <form onSubmit={handleSearch} className="relative">
                         <input
                             type="text"
@@ -125,7 +158,16 @@ const Header = () => {
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </form>
+
                     <nav className="flex flex-col space-y-1">
+                        <Link
+                            href="/"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="px-4 py-3 text-sm font-bold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors flex items-center justify-between group"
+                        >
+                            Home
+                            <span className="text-gray-400 group-hover:text-blue-500 transition-colors">→</span>
+                        </Link>
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
@@ -138,6 +180,15 @@ const Header = () => {
                             </Link>
                         ))}
                     </nav>
+
+                    <div className="pt-6 border-t border-gray-200 dark:border-gray-800">
+                        <div className="flex flex-col space-y-3">
+                            <Link href="/about" onClick={() => setIsMenuOpen(false)} className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600">About Us</Link>
+                            <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600">Contact</Link>
+                            <Link href="/e-paper" onClick={() => setIsMenuOpen(false)} className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600">E-Paper</Link>
+                            <Link href="/privacy" onClick={() => setIsMenuOpen(false)} className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600">Privacy Policy</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
