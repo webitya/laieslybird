@@ -101,7 +101,7 @@ export default function SocialShare({ url, title, description }: SocialShareProp
                 className="flex items-center justify-center h-9 w-9 rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition-all hover:scale-110"
                 aria-label="Copy link"
             >
-                {copied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
+                {copied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
             </button>
         </div>
     );
